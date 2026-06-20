@@ -67,6 +67,15 @@
     }
     .nav-cta:hover { background: var(--emerald-dark) !important; color: var(--white) !important; }
 
+    .nav-cta-secondary {
+      background: var(--gold);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta-secondary:hover { background: #C8860F !important; color: var(--white) !important; }
+
     /* ── HERO ── */
     #accueil {
       min-height: 100vh;
@@ -83,7 +92,6 @@
 
     .hero-bg-slide {
       position: absolute; inset: 0;
-      background-size: cover;
       background-position: center;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
@@ -93,10 +101,16 @@
     /* Chapelet / Misbaha */
     .hero-bg-slide:nth-child(1) {
       background-image: url('./chapelet.jpg');
+      background-size: cover;
+      background-position: center;
     }
     /* Coran ouvert */
     .hero-bg-slide:nth-child(2) {
       background-image: url('./coran.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #1a1a1a;
     }
 
     .hero-bg-overlay {
@@ -442,7 +456,8 @@
       <li><a href="#accueil">Accueil</a></li>
       <li><a href="#apropos">À propos</a></li>
       <li><a href="#cours">Nos cours</a></li>
-      <li><a href="#contact" class="nav-cta">S'inscrire</a></li>
+      <li><a href="https://karatou-m.github.io/Makaranta/reservation-creneaux.html" class="nav-cta-secondary">Réserver un créneau</a></li>
+      <li><a href="https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html" class="nav-cta">S'inscrire</a></li>
     </ul>
   </nav>
 
@@ -459,7 +474,7 @@
       <h1>Apprendre le Coran,<br><em>un verset à la fois</em></h1>
       <p>Makaranta propose des cours de récitation du Coran et de Tajwid pour enfants et adultes, dans un cadre bienveillant et structuré.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">S'inscrire maintenant</a>
+        <a href="https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html" class="btn-primary">S'inscrire maintenant</a>
         <a href="#cours" class="btn-secondary">Découvrir les cours</a>
       </div>
       <div class="hero-stats">
@@ -604,7 +619,7 @@
           <label>Message (optionnel)</label>
           <textarea placeholder="Questions, informations complémentaires..."></textarea>
         </div>
-        <button class="btn-form" onclick="window.location.href='mailto:inscription@makaranta-edu.com'">Envoyer ma demande →</button>
+        <button class="btn-form" onclick="window.location.href='https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html'">Envoyer ma demande →</button>
       </div>
     </div>
   </section>
