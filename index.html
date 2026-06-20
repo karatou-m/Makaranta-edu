@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Makaranta — École de Coran et Tajwid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --emerald:   #0D9E6E;
+      --emerald-dark: #097A54;
+      --gold:      #E8A020;
+      --gold-light:#FFF3DC;
+      --indigo:    #2D3A8C;
+      --cream:     #FAFAF7;
+      --charcoal:  #1A1A2E;
+      --muted:     #6B7280;
+      --white:     #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(250,250,247,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--emerald);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--gold); }
+
+    .logo-group { display: flex; align-items: center; gap: 1rem; }
+
+    .logo-bismillah {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      direction: rtl;
+      border-right: 1px solid rgba(0,0,0,0.12);
+      padding-right: 1rem;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--emerald); }
+
+    .nav-cta {
+      background: var(--emerald);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--emerald-dark) !important; color: var(--white) !important; }
+
+    .nav-cta-secondary {
+      background: var(--gold);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta-secondary:hover { background: #C8860F !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    #accueil {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 5% 4rem;
+      position: relative; overflow: hidden;
+      background: var(--charcoal);
+    }
+
+    .hero-bg-slides {
+      position: absolute; inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg-slide {
+      position: absolute; inset: 0;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .hero-bg-slide.active { opacity: 1; }
+
+    .hero-bg-slide:nth-child(1) {
+      background-image: url('./verset-muzzammil.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #1a1a1a;
+    }
+    .hero-bg-slide:nth-child(2) {
+      background-image: url('./coran.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #1a1a1a;
+    }
+
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(10,10,20,0.82) 0%,
+        rgba(13,158,110,0.35) 60%,
+        rgba(10,10,20,0.6) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-bg-pattern {
+      position: absolute; inset: 0; z-index: 2;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(13,158,110,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(232,160,32,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content { max-width: 680px; position: relative; z-index: 3; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(232,160,32,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.8rem; font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-bismillah {
+      font-family: 'Traditional Arabic', 'Scheherazade New', 'Amiri', 'Noto Naskh Arabic', serif;
+      font-size: clamp(4rem, 10vw, 7rem);
+      font-weight: 400;
+      color: var(--gold);
+      direction: rtl;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      text-shadow: 0 2px 20px rgba(232,160,32,0.4);
+    }
+
+    .hero-bismillah-line2 {
+      display: block;
+      font-size: clamp(2.5rem, 5.5vw, 3.8rem);
+      font-weight: 700;
+      color: #2DD4A7;
+      margin-top: 1.5rem;
+      text-shadow: 0 2px 16px rgba(45,212,167,0.4);
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content h1 em {
+      font-style: normal;
+      color: var(--gold);
+      position: relative;
+    }
+
+    .hero-content h1 em::after {
+      content: '';
+      position: absolute; bottom: 2px; left: 0; right: 0; height: 4px;
+      background: var(--emerald);
+      border-radius: 2px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 2rem;
+      max-width: 520px;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--emerald);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--emerald-dark); transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-item { text-align: left; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900;
+      color: var(--gold);
+    }
+    .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+    /* ── SECTIONS COMMUNES ── */
+    section { padding: 5rem 5%; }
+
+    .section-eyebrow {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--emerald);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── À PROPOS ── */
+    #apropos {
+      background: var(--white);
+    }
+
+    .apropos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .apropos-visual {
+      background: linear-gradient(135deg, var(--emerald), var(--indigo));
+      border-radius: 24px;
+      min-height: 560px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .apropos-visual::before {
+      content: '﷽';
+      font-size: 3rem;
+      color: rgba(255,255,255,0.15);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+    }
+
+    .apropos-verse {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      color: var(--white);
+      direction: rtl;
+      line-height: 2.1;
+      margin-bottom: 1.75rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .apropos-verse-ref {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .apropos-verse-translation {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.75;
+      max-width: 560px;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .apropos-verse-comment {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.97);
+      line-height: 1.7;
+      max-width: 480px;
+      font-weight: 500;
+    }
+
+    .apropos-icon {
+      font-size: 5rem;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+    }
+
+    .values-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .values-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .values-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.7rem;
+      margin-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    /* ── COURS ── */
+    #cours { background: var(--cream); }
+
+    .cours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cours-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .cours-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      border-radius: 20px 20px 0 0;
+    }
+    .cours-card:nth-child(1)::after { background: var(--emerald); }
+    .cours-card:nth-child(2)::after { background: var(--gold); }
+    .cours-card:nth-child(3)::after { background: var(--indigo); }
+    .cours-card:nth-child(4)::after { background: #E05A2B; }
+
+    .cours-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+    .cours-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .cours-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 0.5rem;
+    }
+
+    .cours-card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+    .cours-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      background: var(--gold-light);
+      color: var(--gold);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: linear-gradient(135deg, var(--charcoal) 0%, var(--indigo) 100%);
+      color: var(--white);
+    }
+
+    #contact .section-eyebrow { color: var(--gold); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-subtitle { color: rgba(255,255,255,0.65); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
+
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-item-text { font-size: 0.9rem; }
+    .contact-item-label { color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 0.1rem; }
+    .contact-item-value { color: var(--white); font-weight: 500; }
+    .contact-item-value a { color: var(--gold); text-decoration: none; }
+
+    .contact-form {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 2rem;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--emerald); }
+    .form-group select option { background: var(--charcoal); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .btn-form {
+      background: var(--emerald);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .btn-form:hover { background: var(--emerald-dark); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0F0F1A;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer strong { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .logo-bismillah { display: none; }
+      .apropos-grid { grid-template-columns: 1fr; }
+      .apropos-visual { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Maka<span>ranta</span></div>
+    <ul class="nav-links">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#cours">Nos cours</a></li>
+      <li><a href="https://karatou-m.github.io/Makaranta/reservation-creneaux.html" class="nav-cta-secondary">Réserver un créneau</a></li>
+      <li><a href="https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html" class="nav-cta">S'inscrire</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="accueil">
+    <div class="hero-bg-slides">
+      <div class="hero-bg-slide active"></div>
+      <div class="hero-bg-slide"></div>
+    </div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ École de Coran & Tajwid</div>
+      <div class="hero-bismillah">﷽<span class="hero-bismillah-line2">فَاقْرَءُوا مَا تَيَسَّرَ مِنَ الْقُرْآنِ</span></div>
+      <h1>Apprendre le Coran,<br><em>un verset à la fois</em></h1>
+      <p>Makaranta propose des cours de récitation du Coran et de Tajwid pour enfants et adultes, dans un cadre bienveillant et structuré.</p>
+      <div class="hero-actions">
+        <a href="https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html" class="btn-primary">S'inscrire maintenant</a>
+        <a href="#cours" class="btn-secondary">Découvrir les cours</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Niveaux disponibles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">En ligne</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Tous</div>
+          <div class="stat-label">Niveaux acceptés</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="apropos">
+    <div class="apropos-grid">
+      <div class="apropos-visual">
+        <div class="apropos-verse-ref">Sourate Al-Muzzammil — 73:20</div>
+        <div class="apropos-verse">فَاقْرَءُوا مَا تَيَسَّرَ مِنَ الْقُرْآنِ ۚ عَلِمَ أَنْ سَيَكُونُ مِنْكُمْ مَرْضَىٰ ۙ وَآخَرُونَ يَضْرِبُونَ فِي الْأَرْضِ يَبْتَغُونَ مِنْ فَضْلِ اللَّهِ ۙ وَآخَرُونَ يُقَاتِلُونَ فِي سَبِيلِ اللَّهِ ۖ فَاقْرَءُوا مَا تَيَسَّرَ مِنْهُ</div>
+        <p class="apropos-verse-translation">« Lisez-en donc ce qui vous est facile [du Coran]. Il sait que parmi vous il y aura des malades, d'autres qui voyageront à travers le monde, en quête de la grâce d'Allah, et d'autres encore qui combattront dans le sentier d'Allah. Lisez-en donc ce qui vous est facile. »</p>
+        <p class="apropos-verse-comment">Allah connaît ta situation et tes excuses (travail, études, voyages, maladies) mais tu dois garder le lien avec le Coran.</p>
+      </div>
+      <div>
+        <div class="section-eyebrow">Notre mission</div>
+        <h2 class="section-title">Une école fondée sur la transmission</h2>
+        <p style="color: var(--muted); margin-bottom: 1rem;">Makaranta — qui signifie « école » en haoussa — est née de la volonté de rendre l'enseignement coranique accessible à tous, quel que soit le niveau de départ.</p>
+        <p style="color: var(--muted); margin-bottom: 1.5rem;">Tous nos enseignants sont titulaires d'une <strong style="color: var(--emerald);">Ijaza</strong> — certification traditionnelle attestant d'une chaîne de transmission ininterrompue jusqu'au Prophète ﷺ. Une garantie de qualité et d'authenticité pour chaque élève.</p>
+
+        <!-- Ijaza badge -->
+        <div style="display:inline-flex; align-items:center; gap:0.75rem; background:var(--gold-light); border:1px solid var(--gold); border-radius:12px; padding:0.75rem 1.25rem; margin-bottom:1.5rem;">
+          <span style="font-size:1.5rem;">🏅</span>
+          <div>
+            <div style="font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gold);">Garantie qualité</div>
+            <div style="font-size:0.85rem; font-weight:600; color:var(--charcoal);">Enseignants certifiés Ijaza</div>
+          </div>
+        </div>
+
+        <ul class="values-list">
+          <li>Chaîne de transmission authentique et vérifiée</li>
+          <li>Pédagogie progressive adaptée à chaque élève</li>
+          <li>Enseignement du Tajwid selon les règles traditionnelles</li>
+          <li>Suivi personnalisé et évaluation régulière</li>
+          <li>Cours pour enfants dès 5 ans et adultes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURS -->
+  <section id="cours">
+    <div class="section-eyebrow">Ce que nous enseignons</div>
+    <h2 class="section-title">Nos cours</h2>
+    <p class="section-subtitle">Des programmes structurés pour progresser à votre rythme, du débutant au récitant confirmé.</p>
+    <div class="cours-grid">
+      <div class="cours-card">
+        <span class="cours-icon">🌱</span>
+        <h3>Coran Débutant</h3>
+        <p>Apprentissage de l'alphabet arabe, lecture des lettres et premiers versets. Idéal pour les débutants complets.</p>
+        <span class="cours-tag">Dès 5 ans</span>
+      </div>
+      <div class="cours-card">
+        <span class="cours-icon">📖</span>
+        <h3>Lecture Courante</h3>
+        <p>Amélioration de la fluidité de lecture et introduction aux règles fondamentales du Tajwid.</p>
+        <span class="cours-tag">Intermédiaire</span>
+      </div>
+      <div class="cours-card">
+        <span class="cours-icon">🎙️</span>
+        <h3>Tajwid Avancé</h3>
+        <p>Maîtrise complète des règles de Tajwid, application pratique sur les sourates complètes.</p>
+        <span class="cours-tag">Avancé</span>
+      </div>
+      <div class="cours-card">
+        <span class="cours-icon">🏆</span>
+        <h3>Mémorisation (Hifz)</h3>
+        <p>Programme de mémorisation progressive du Coran avec révisions régulières et suivi individuel.</p>
+        <span class="cours-tag">Tous niveaux</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">Rejoindre Makaranta</div>
+        <h2 class="section-title">Inscrivez-vous</h2>
+        <p class="section-subtitle">Prenez contact avec nous pour démarrer votre parcours ou celui de votre enfant.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-text">
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value"><a href="mailto:contact@makaranta-edu.com">contact@makaranta-edu.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📋</div>
+            <div class="contact-item-text">
+              <div class="contact-item-label">Inscription en ligne</div>
+              <div class="contact-item-value"><a href="mailto:inscription@makaranta-edu.com">inscription@makaranta-edu.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">ℹ️</div>
+            <div class="contact-item-text">
+              <div class="contact-item-label">Informations</div>
+              <div class="contact-item-value"><a href="mailto:info@makaranta-edu.com">info@makaranta-edu.com</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" placeholder="Votre prénom" />
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" placeholder="Votre nom" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="votre@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Cours souhaité</label>
+          <select>
+            <option value="">Sélectionner un cours</option>
+            <option>Coran Débutant</option>
+            <option>Lecture Courante</option>
+            <option>Tajwid Avancé</option>
+            <option>Mémorisation (Hifz)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (optionnel)</label>
+          <textarea placeholder="Questions, informations complémentaires..."></textarea>
+        </div>
+        <button class="btn-form" onclick="window.location.href='https://karatou-m.github.io/Makaranta/inscription-cours-tajwid.html'">Envoyer ma demande →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>Makaranta</strong> — École de Coran et Tajwid &nbsp;·&nbsp; <a href="mailto:contact@makaranta-edu.com">contact@makaranta-edu.com</a></p>
+  </footer>
+
+  <script>
+    // Alternance chapelet / tablette coranique
+    const slides = document.querySelectorAll('.hero-bg-slide');
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 5000);
+  </script>
+</body>
+</html>
